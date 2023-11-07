@@ -1,7 +1,7 @@
 import styles from "./CountryList.module.css";
 import Spinner from "../Spinner/Spinner";
 import Message from "../Message/Message";
-import CountryItem from "./CountryItem";
+import CountryItem from "../CountryItem/CountryItem";
 import { useCities } from "../../contexts/CitiesContext";
 
 export default function CountryList() {

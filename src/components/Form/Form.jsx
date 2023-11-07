@@ -10,14 +10,7 @@ import { useCities } from "../../contexts/CitiesContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
-
-export function convertToEmoji(countryCode) {
-  const codePoints = countryCode
-    .toUpperCase()
-    .split("")
-    .map((char) => 127397 + char.charCodeAt());
-  return String.fromCodePoint(...codePoints);
-}
+import { convertToEmoji } from "../../utils/ConvertToEmoji";
 
 const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
 
