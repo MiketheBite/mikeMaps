@@ -5,7 +5,7 @@ import Button from "../Button/Button";
 import BackButton from "../BackButton/BackButton";
 import Message from "../Message/Message";
 import Spinner from "../Spinner/Spinner";
-import useUrlPosition from "../../hooks/useUrlPosition";
+import { useUrlPosition } from "../../hooks/useUrlPosition";
 import { useCities } from "../../contexts/CitiesContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
