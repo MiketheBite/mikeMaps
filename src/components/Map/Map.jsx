@@ -63,6 +63,9 @@ export default function Map() {
               key={city.id}
             >
               <Popup>
+                <span className={styles.emoji}>
+                  {city.emoji ? flagemojiToPNG(city.emoji) : ""}
+                </span>
                 <span>{city.cityName}</span>-<span>{city.notes}</span>{" "}
               </Popup>
             </Marker>
