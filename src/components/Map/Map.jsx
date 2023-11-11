@@ -15,7 +15,7 @@ import Button from "../Button/Button";
 import { useUrlPosition } from "../../hooks/useUrlPosition";
 
 export default function Map() {
-  const { cities } = useCities();
+  const { cities, flagemojiToPNG } = useCities();
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const {
     isLoading: isLoadingPosition,
@@ -63,6 +63,9 @@ export default function Map() {
               key={city.id}
             >
               <Popup>
+                <span className={styles.emoji}>
+                  {city.emoji ? flagemojiToPNG(city.emoji) : ""}
+                </span>
                 <span>{city.cityName}</span>-<span>{city.notes}</span>{" "}
               </Popup>
             </Marker>
