@@ -1,4 +1,6 @@
 import { Suspense, lazy } from "react";
+import { SWRConfig } from "swr";
+import fetcher from "./utils/fetcher";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { CitiesProvider } from "./contexts/CitiesContext";
@@ -18,35 +20,37 @@ const Login = lazy(() => import("./pages/Login"));
 
 export default function App() {
   return (
-    <AuthProvider>
-      <CitiesProvider>
-        <BrowserRouter>
-          <Suspense fallback={<SpinnerFullPage />}>
-            <Routes>
-              <Route index element={<Homepage />} />
-              <Route path="login" element={<Login />} />
+    <SWRConfig value={{ fetcher }}>
+      <AuthProvider>
+        <CitiesProvider>
+          <BrowserRouter>
+            <Suspense fallback={<SpinnerFullPage />}>
+              <Routes>
+                <Route index element={<Homepage />} />
+                <Route path="login" element={<Login />} />
 
-              <Route
-                path="app"
-                element={
-                  <ProtectedRoute>
-                    <AppLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<Navigate replace to="cities" />} />
+                <Route
+                  path="app"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route index element={<Navigate replace to="cities" />} />
 
-                <Route path="cities" element={<CityList />} />
-                <Route path="cities/:id" element={<City />} />
-                <Route path="countries" element={<CountryList />} />
-                <Route path="form" element={<Form />} />
-              </Route>
+                  <Route path="cities" element={<CityList />} />
+                  <Route path="cities/:id" element={<City />} />
+                  <Route path="countries" element={<CountryList />} />
+                  <Route path="form" element={<Form />} />
+                </Route>
 
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </CitiesProvider>
-    </AuthProvider>
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </CitiesProvider>
+      </AuthProvider>
+    </SWRConfig>
   );
 }
