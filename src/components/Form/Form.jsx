@@ -79,7 +79,6 @@ function Form() {
   }
 
   if (isLoadingGeocoding) {
-    console.log("Renderizando no Form");
     return <Spinner />;
   }
   if (!lat && !lng) return <Message message="Start by clicking on the map!" />;

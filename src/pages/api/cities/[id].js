@@ -1,9 +1,10 @@
-import { dbConnect } from "../../../db/connect";
-import City from "../../../db/models/City";
+import { dbConnect } from "../../../../db/connect.js";
+import City from "../../../../db/models/City";
 
 export default async function handler(request, response) {
   const connection = await dbConnect();
   const { id } = request.query;
+  console.log("Connection Status:", connection);
 
   if (!connection)
     return response

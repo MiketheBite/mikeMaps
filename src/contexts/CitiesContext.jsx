@@ -5,8 +5,10 @@ import {
   useEffect,
   useReducer,
 } from "react";
+import useSWR, { mutate } from "swr";
+import fetcher from "../utils/fetcher";
 
-const BASE_URL = "http://localhost:9000";
+const API_BASE_URL = `/api/cities/`;
 
 const CitiesContext = createContext();
 
@@ -64,27 +66,18 @@ function reducer(state, action) {
 }
 
 function CitiesProvider({ children }) {
-  const [{ cities, isLoading, currentCity }, dispatch] = useReducer(
+  const { data: cities, error: swrError } = useSWR(API_BASE_URL, fetcher);
+
+  const [{ isLoading, currentCity }, dispatch] = useReducer(
     reducer,
     initialState
   );
 
-  useEffect(function () {
-    async function fetchCities() {
-      dispatch({ type: "loading" });
-      try {
-        const res = await fetch(`${BASE_URL}/cities`);
-        const data = await res.json();
-        dispatch({ type: "cities/loaded", payload: data });
-      } catch {
-        dispatch({
-          type: "rejected",
-          payload: "There was an error loading cities...",
-        });
-      }
+  useEffect(() => {
+    if (cities) {
+      dispatch({ type: "cities/loaded", payload: cities });
     }
-    fetchCities();
-  }, []);
+  }, [cities]);
 
   const getCity = useCallback(
     async function getCity(id) {
@@ -93,8 +86,7 @@ function CitiesProvider({ children }) {
       dispatch({ type: "loading" });
 
       try {
-        const res = await fetch(`${BASE_URL}/cities/${id}`);
-        const data = await res.json();
+        const data = await fetcher(`${API_BASE_URL}/${id}`);
         dispatch({ type: "city/loaded", payload: data });
       } catch {
         dispatch({
@@ -110,21 +102,18 @@ function CitiesProvider({ children }) {
     dispatch({ type: "loading" });
 
     try {
-      const res = await fetch(`${BASE_URL}/cities`, {
+      const data = await fetcher(API_BASE_URL, {
         method: "POST",
-        body: JSON.stringify(newCity),
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(newCity),
       });
-      const data = await res.json();
 
       dispatch({ type: "city/created", payload: data });
-    } catch {
-      dispatch({
-        type: "rejected",
-        payload: "There was an error creating the city...",
-      });
+      mutate(API_BASE_URL);
+    } catch (error) {
+      dispatch({ type: "rejected", payload: `Error: ${error.message}` });
     }
   }
 
@@ -132,15 +121,12 @@ function CitiesProvider({ children }) {
     dispatch({ type: "loading" });
 
     try {
-      await fetch(`${BASE_URL}/cities/${id}`, {
+      await fetcher(`${API_BASE_URL}/${id}`, {
         method: "DELETE",
       });
-      dispatch({ type: "city/deleted", payload: id });
-    } catch {
-      dispatch({
-        type: "rejected",
-        payload: "There was an error deleting the city...",
-      });
+    } catch (error) {
+      dispatch({ type: "rejected", payload: `Error: ${error.message}` });
+      mutate(API_BASE_URL);
     }
   }
 
@@ -152,6 +138,12 @@ function CitiesProvider({ children }) {
       <img src={`https://flagcdn.com/24x18/${countryCode}.png`} alt="flag" />
     );
   };
+
+  useEffect(() => {
+    if (swrError) {
+      dispatch({ type: "rejected", payload: `SWR Error: ${swrError.message}` });
+    }
+  }, [swrError]);
 
   return (
     <CitiesContext.Provider

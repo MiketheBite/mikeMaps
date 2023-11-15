@@ -1,4 +1,4 @@
-import { dbConnect } from "../../../db/connect";
+import { dbConnect } from "../../../../db/connect.js";
 import City from "../../../db/models/City";
 
 export default async function handler(request, response) {

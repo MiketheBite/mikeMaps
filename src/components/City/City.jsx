@@ -27,7 +27,6 @@ function City() {
   const { cityName, emoji, date, notes } = currentCity;
 
   if (isLoading) {
-    console.log("Renderizando no City");
     return <Spinner />;
   }
   return (

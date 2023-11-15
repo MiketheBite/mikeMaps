@@ -8,7 +8,6 @@ export default function CountryList() {
   const { cities, isLoading } = useCities();
 
   if (isLoading) {
-    console.log("Renderizando no CountryList");
     return <Spinner />;
   }
   if (!cities.length)
