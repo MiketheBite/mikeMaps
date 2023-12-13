@@ -42,9 +42,11 @@ export default function Map() {
   return (
     <div className={styles.mapContainer}>
       {!geolocationPosition && (
-        <Button type="position" onClick={getPosition}>
-          {isLoadingPosition ? "Loading..." : "Use your position"}
-        </Button>
+        <div className={styles.button}>
+          <Button type="position" onClick={getPosition}>
+            {isLoadingPosition ? "Loading..." : "Use your position"}
+          </Button>
+        </div>
       )}
       <MapContainer
         center={mapPosition}

@@ -32,3 +32,13 @@
   color: var(--color-light--1);
   margin-bottom: 2.5rem;
 }
+
+@media screen and (max-width: 768px) {
+  .homepage {
+    padding: 2.5rem;
+  }
+  .homepage h1 {
+    padding-top: 100px;
+    font-size: 3.5rem;
+  }
+}
