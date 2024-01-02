@@ -54,8 +54,8 @@
 
 @media screen and (max-width: 425px) {
   .user {
-    left: 0.5rem;
-    top: 2rem;
+    left: 18%;
+    top: 72rem;
     width: 12vh;
     background-color: transparent;
   }
