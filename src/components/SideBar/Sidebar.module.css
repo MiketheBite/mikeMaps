@@ -12,6 +12,11 @@
   .sidebar {
     flex-basis: 5rem;
     padding: 1rem;
-    height: auto;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .sidebar {
+    height: 30%;
   }
 }
