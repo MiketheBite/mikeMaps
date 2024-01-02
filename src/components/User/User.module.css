@@ -51,19 +51,3 @@
     display: none;
   }
 }
-
-@media screen and (max-width: 425px) {
-  .user {
-    left: 18%;
-    top: 72rem;
-    width: 12vh;
-    background-color: transparent;
-  }
-  .user h1 {
-    display: none;
-  }
-
-  .user img {
-    display: none;
-  }
-}
