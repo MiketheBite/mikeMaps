@@ -14,7 +14,7 @@ import { useGeolocation } from "../../hooks/useGeolocation";
 import Button from "../Button/Button";
 import { useUrlPosition } from "../../hooks/useUrlPosition";
 
-export default function Map({ toggleSidebar }) {
+export default function Map({ toggleSidebar, isSidebarOpen }) {
   const { cities, flagemojiToPNG } = useCities();
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const {
@@ -74,7 +74,10 @@ export default function Map({ toggleSidebar }) {
           </>
         ))}
         <ChangeCenter position={mapPosition} />
-        <DetectClick toggleSidebar={toggleSidebar} />
+        <DetectClick
+          toggleSidebar={toggleSidebar}
+          isSidebarOpen={isSidebarOpen}
+        />
       </MapContainer>
     </div>
   );
@@ -86,12 +89,14 @@ function ChangeCenter({ position }) {
   return null;
 }
 
-function DetectClick({ toggleSidebar }) {
+function DetectClick({ toggleSidebar, isSidebarOpen }) {
   const navigate = useNavigate();
 
   useMapEvents({
     click: (e) => {
-      toggleSidebar();
+      if (!isSidebarOpen) {
+        toggleSidebar();
+      }
       navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
     },
   });

@@ -21,7 +21,6 @@
   border: none;
   border-radius: 0px;
   cursor: pointer;
-
   font-size: 2.5rem;
   transition: transform 0.3s ease;
   z-index: 1000;
@@ -29,6 +28,27 @@
 
 .toggleButton:hover {
   transform: scaleX(1.1);
+}
+
+.textTooltip {
+  visibility: hidden;
+  width: 100px;
+  top: 48.7%;
+  left: 120%;
+  font-size: x-small;
+  background-color: var(--color-dark--1);
+  color: var(--color-light--2);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.toggleButton:hover .textTooltip {
+  visibility: visible;
+  opacity: 1;
 }
 
 .back {

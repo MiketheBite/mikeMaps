@@ -15,10 +15,14 @@ export default function AppLayout() {
   return (
     <div className={styles.app}>
       {isSidebarOpen && <Sidebar />}
-      <Button onClick={toggleSidebar} type="toggleButton">
-        {isSidebarOpen ? "<" : ">"}
+      <Button
+        onClick={toggleSidebar}
+        type="toggleButton"
+        tooltipText={isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
+      >
+        |
       </Button>
-      <Map toggleSidebar={toggleSidebar} />
+      <Map toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
       <User />
     </div>
   );
